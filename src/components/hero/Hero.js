@@ -15,6 +15,11 @@ const Hero = ({movies}) => {
     navigate(`/Reviews/${movieId}`);
   }
 
+  if (!Array.isArray(movies)) {
+    return <div>No movies available</div>;
+  }
+
+
   return (
     <div>
       <Carousel>

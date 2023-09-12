@@ -10,23 +10,28 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
     const revText = useRef();
     let params = useParams();
     const movieId = params.movieId;
-
+    
     useEffect(()=>{
         getMovieData(movieId);
-    },[movieId])
+    },[])
 
-    const addReview = async (e) => {
+    const addReview = async (e) =>{
         e.preventDefault();
+
         const rev = revText.current;
-    
-        try {
-            const response = await api.post("/api/v1/reviews", { reviewBody: rev.value, imdbId: movieId });
-            const updatedReviews = [...reviews, { body: rev.value }];
+
+        try
+        {
+            const response = await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId});
+            const updatedReviews = reviews != null ? [...reviews, { body: rev.value }] : [{ body: rev.value }];
             rev.value = "";
-            setReviews(updatedReviews); // Trigger a re-render with updated reviews
-        } catch (err) {
+            setReviews(updatedReviews);
+        }
+        catch(err)
+        {
             console.error(err);
         }
+    
     }
 
 
@@ -54,19 +59,19 @@ const Reviews = ({getMovieData,movie,reviews,setReviews}) => {
                     </>
                 }
                 {
-                    reviews?.map((r) => {
-                        return(
-                            <>
-                                <Row>
-                                    <Col>{r.body}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <hr />
-                                    </Col>
-                                </Row>                                
-                            </>
-                        )
+                    reviews?.map((r, index) => {
+                       return (
+                        <Row key={index}>
+                            <Row key={index}>
+                                <Col>{r.body}</Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                <hr />
+                                </Col>
+                            </Row>
+                        </Row>
+                       )
                     })
                 }
             </Col>

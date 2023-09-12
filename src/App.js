@@ -7,6 +7,8 @@ import Home from './components/home/Home';
 import Header from './components/header/Header';
 import Trailer from './components/trailer/Trailer';
 import Reviews from './components/reviews/Reviews';
+import LoginPage from './components/auth/LoginPage';
+import RegisterPage from './components/auth/RegisterPage';
 function App() {
 
 const [movies, setMovies] = useState([]);
@@ -30,18 +32,18 @@ const getMovieData = async (movieId) => {
     const singleMovie = response.data;
 
     setMovie(singleMovie);
-    setReviews(singleMovie.reviews);
+
+    //setReviews(singleMovie.reviews);
+    setReviews(singleMovie.reviewIds);
 
   } catch (err) {
-
+    console.log(err)
   }
 }
 
 useEffect(() => {
   getMovies();
 }, []);
-
-
 
 
   return (
@@ -52,6 +54,8 @@ useEffect(() => {
       <Route path="/" element={<Home movies={movies}/>} /></Route>
       <Route path="/Trailer/:ytTrailerId" element={<Trailer/>}></Route>
       <Route path="/Reviews/:movieId" element ={<Reviews getMovieData = {getMovieData} movie={movie} reviews ={reviews} setReviews = {setReviews} />}></Route>
+      <Route path="/Login" element={<LoginPage/>}></Route>
+      <Route path="/Register" element={<RegisterPage/>}></Route>
      </Routes>
     </div>
   );

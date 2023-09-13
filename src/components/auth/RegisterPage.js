@@ -1,31 +1,41 @@
-import React, { useState } from 'react'
-import {Form} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react'
+import {Col, Form, Row} from 'react-bootstrap';
 import api from '../../api/axiosConfig';
+import {useNavigate} from "react-router-dom";
 
 const RegisterPage = () => {
-
-    const uid = function(){
-        return Math.floor(Math.random());
+    const navigate = useNavigate();
+    const uid = () => {
+        //generate unique random number each time, fix later
+        return Math.floor(Math.random() * 100000);
     }
     const [userID, setUserID] = useState(uid());
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const response = await api.post("api/v1/users/save",
-            {userID:userID, username:username, email:email, password:password});
-            setUserID(uid())
+            const response = await api.post('api/v1/users/save', {
+                userID: userID,
+                username: username,
+                email: email,
+                password: password,
+            });
+            setUserID(uid());
+            navigate('/Login');
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-    }
+    };
 
 
     return (
         <Form>
+            <div>
+                <h1>Register</h1>
+            </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputUsername1" className="form-label">Username</label>
                 <input type="username" className="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp"
@@ -43,7 +53,7 @@ const RegisterPage = () => {
                 <input type="password" className="form-control" id="exampleInputPassword1"
                      onChange={e => setPassword(e.target.value)}/>
             </div>
-            <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
         </Form>
      )
 }

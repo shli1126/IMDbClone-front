@@ -1,25 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Form} from 'react-bootstrap';
+import api from '../../api/axiosConfig';
 
 const RegisterPage = () => {
+
+    const uid = function(){
+        return Math.floor(Math.random());
+    }
+    const [userID, setUserID] = useState(uid());
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async () => {
+        try {
+            const response = await api.post("api/v1/users/save",
+            {userID:userID, username:username, email:email, password:password});
+            setUserID(uid())
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+
     return (
         <Form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div className="mb-3">
+                <label htmlFor="exampleInputUsername1" className="form-label">Username</label>
+                <input type="username" className="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp"
+                    onChange={e => setUsername(e.target.value)}/>
+                <div id="usernameHelp" className="form-text">We'll never share your username with anyone else.</div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div className="mb-3">
+                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    onChange={e => setEmail(e.target.value)}/>
+                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1"/>
+            <div className="mb-3">
+                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                <input type="password" className="form-control" id="exampleInputPassword1"
+                     onChange={e => setPassword(e.target.value)}/>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </Form>  
+            <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+        </Form>
      )
 }
 

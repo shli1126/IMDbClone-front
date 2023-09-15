@@ -9,6 +9,8 @@ import Trailer from './components/trailer/Trailer';
 import Reviews from './components/reviews/Reviews';
 import RegisterPage from './components/auth/RegisterPage';
 import LoginPage from "./components/auth/LoginPage";
+import WatchListPage from "./components/watchList/WatchListPage";
+
 function App() {
 
 const [movies, setMovies] = useState([]);
@@ -19,8 +21,9 @@ const [reviews, setReviews] = useState();
 const getMovies = async () => {
   try {
     const response = await axios.get("/api/v1/movies");
-    console.log(response.data);
+    //console.log(response.data);
     setMovies(response.data);
+
   } catch (err) {
     console.log(err);
   }
@@ -56,6 +59,7 @@ useEffect(() => {
                 <Route path="/Reviews/:movieId" element ={<Reviews getMovieData = {getMovieData} movie={movie} reviews ={reviews} setReviews = {setReviews} />}></Route>
                 <Route path="/Register" element={<RegisterPage/>}></Route>
                 <Route path="/Login" element={<LoginPage/>}></Route>
+                <Route path="/WatchList/:username" element={<WatchListPage/>}></Route>
             </Route>
         </Routes>
     </div>

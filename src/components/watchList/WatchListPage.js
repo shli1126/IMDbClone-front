@@ -44,6 +44,9 @@ const WatchListPage = () => {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Add</button>
             </Form>
+
+            <hr/>
+            
             <UserWatchList movies={movies}></UserWatchList>
         </div>
     )

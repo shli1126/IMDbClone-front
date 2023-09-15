@@ -7,7 +7,6 @@ import UserWatchList from "../userWatchList/UserWatchList";
 
 const WatchListPage = () => {
 
-    const [email, setEmail] = useState("");
     const [imdbId, setImdbId] = useState("");
     const [movies, setMovies] = useState([]);
     let param = useParams()
@@ -23,7 +22,21 @@ const WatchListPage = () => {
         }
     }
     const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const response = await api.post(`/api/v1/users/watchlist`, {
+                username: username,
+                imdbId: imdbId
+            });
+            const addedMovie = await api.get(`/api/v1/movies/${imdbId}`);
+            console.log(addedMovie)
+            setMovies(prevMovies => {
+                return [...prevMovies, addedMovie.data]
+            })
 
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -46,7 +59,7 @@ const WatchListPage = () => {
             </Form>
 
             <hr/>
-            
+
             <UserWatchList movies={movies}></UserWatchList>
         </div>
     )

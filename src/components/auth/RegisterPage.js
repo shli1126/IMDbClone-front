@@ -23,12 +23,12 @@ const RegisterPage = () => {
                 email: email,
                 password: password,
             });
-            setUserID(uid());
             navigate('/Login');
         } catch (err) {
             console.log(err);
         }
     };
+
 
 
     return (

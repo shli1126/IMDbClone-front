@@ -12,7 +12,6 @@ const WatchListPage = () => {
     let param = useParams()
     const username = param.username;
     const getUser = async () => {
-
         try {
             const response = await api.get(`/api/v1/users/watchlist/${username}`);
             console.log(response.data);
@@ -41,6 +40,8 @@ const WatchListPage = () => {
 
     useEffect(() => {
         getUser()
+        // const loginStatus = JSON.parse(localStorage.getItem('loginStatus'));
+        // console.log(loginStatus)
     }, []);
 
     return (

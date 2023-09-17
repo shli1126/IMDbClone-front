@@ -1,6 +1,6 @@
 import './UserWatchList.css'
 const UserWatchList = ({movies}) => {
-    const columnCount = 3; // You can adjust the number of columns per row as needed
+    const columnCount = 3;
     return (
         <div className="card-grid">
             {movies.map((movie) => {

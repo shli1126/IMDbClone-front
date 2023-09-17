@@ -50,6 +50,7 @@ useEffect(() => {
 
 
   return (
+
     <div className="App">
         <Header/>
         <Routes>
@@ -63,6 +64,7 @@ useEffect(() => {
             </Route>
         </Routes>
     </div>
+
   );
 }
 
